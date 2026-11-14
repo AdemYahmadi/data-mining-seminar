@@ -30,6 +30,62 @@ app = Dash(__name__)
 server = app.server
 app.title = "Python & Data Analytics - live demo"
 
+app.index_string = """<!DOCTYPE html>
+<html>
+    <head>
+        {%metas%}
+        <title>{%title%}</title>
+        {%favicon%}
+        {%css%}
+        <style>
+            ._dash-loading {
+                position: fixed;
+                inset: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 18px;
+                font-size: 0;
+                font-family: system-ui, sans-serif;
+                background: #f7f9fc;
+            }
+            ._dash-loading::before {
+                content: "";
+                width: 40px;
+                height: 40px;
+                border: 4px solid #d6e0ec;
+                border-top-color: #1f4e79;
+                border-radius: 50%;
+                animation: dash-spin 0.9s linear infinite;
+            }
+            ._dash-loading::after {
+                content: "Preparing the live demo\\A Loading the Gapminder data and analysis pipeline";
+                white-space: pre-line;
+                text-align: center;
+                font-size: 17px;
+                font-weight: 600;
+                line-height: 1.8;
+                color: #1f4e79;
+            }
+            @keyframes dash-spin {
+                to { transform: rotate(360deg); }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                ._dash-loading::before { animation-duration: 3s; }
+            }
+        </style>
+    </head>
+    <body>
+        {%app_entry%}
+        <footer>
+            {%config%}
+            {%scripts%}
+            {%renderer%}
+        </footer>
+    </body>
+</html>"""
+
 app.layout = html.Div(
     style={"maxWidth": "980px", "margin": "0 auto",
            "fontFamily": "system-ui, sans-serif", "padding": "12px"},
